@@ -1,14 +1,21 @@
 .layout.ant-layout {
+  img {
+    max-width: 100%;
+  }
+
   min-height: 100vh;
   .logo {
     img {
       height: 2.5rem;
+      width: auto;
     }
   }
   .ant-layout-content {
     display: flex;
     flex-direction: column;
     padding: 0 50px;
+    max-width: 1184px;
+    margin: 0 auto;
 
     .ant-page-header {
       border: 1px solid rgb(235, 237, 240);
@@ -19,9 +26,49 @@
         flex: auto;
       }
     }
+
+    .ad-container {
+      width: 100%;
+      text-align: center;
+
+      .ant-typography {
+        display: block;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .ant-spin {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin: 2rem auto;
+
+      .face-card {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        border: dashed 1px #001529;
+        width: 22%;
+        margin-bottom: 2rem;
+        align-items: center;
+
+        .face {
+          flex: 1 1 auto;
+        }
+      }
+    }
+
+    .ant-alert {
+      text-align: center;
+    }
   }
 
   .ant-layout-footer {
-      text-align: center;
+    text-align: center;
   }
 }
