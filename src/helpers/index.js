@@ -1,5 +1,9 @@
 export const formatPrice = price => {
-  return `$${price / 100}`;
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    currencyDisplay: "symbol"
+  }).format(price/100);
 };
 
 export const formatDate = time => {
