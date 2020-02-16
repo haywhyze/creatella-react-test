@@ -1,46 +1,77 @@
-import React from "react";
-import { Typography, PageHeader } from "antd";
+import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
+import Axios from "axios";
+import Header from "./Header";
+import Contents from "./Contents";
+import { fetchData } from "../api";
 
-const { Header, Content, Footer } = Layout;
-const { Text } = Typography;
+const { Footer } = Layout;
 
 export default function Main() {
-  const today = new Date();
+  const [products, setProducts] = useState([]);
+  const [cache, setCache] = useState([]);
+  const [page, setPage] = useState(1);
+  const [fetching, setFetching] = useState(false);
+
+  const loadMore = () => {
+    setFetching(true);
+    setProducts([...products, ...cache]);
+    setPage(page + 1);
+    fetchData(
+      res => {
+        setFetching(false), setCache(res.data);
+      },
+      error => {
+        setFetching(false);
+        console.log(error);
+      },
+      page + 2,
+      40
+    );
+  };
+
+  const handleScroll = () => {
+    if (fetching) return;
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.querySelector("#root").offsetHeight
+    ) {
+      loadMore();
+    }
+  };
+
+  useEffect(() => {
+    setFetching(true);
+    fetchData(
+      res => {
+        setFetching(false);
+        setProducts(res.data.slice(0, 40));
+        setCache(res.data.slice(40));
+      },
+      error => {
+        setFetching(false);
+        console.log(error);
+      },
+      1,
+      80
+    );
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [products, cache, page, fetching]);
+
   return (
     <>
       <Layout className="layout">
-        <Header>
-          <div className="logo">
-            <img
-              src="https://creatella.ventures/wp-content/uploads/2016/03/creatella-logo-2x.png"
-              alt="creatella logo"
-            />
-          </div>
-        </Header>
-        <Content>
-          <PageHeader
-            title="Products Grid"
-            subTitle="Here you're sure to find a bargain on some of the finest ascii
-          available to purchase. Be sure to peruse our selection of ascii faces
-          in an exciting range of sizes and prices."
-          />
-          <div>
-            <Text strong>But first, a word from our sponsors:</Text>
-            <br />
-            <img
-              className="ad"
-              src={
-                "http://localhost:3000/ads/?r=" +
-                Math.floor(Math.random() * 1000) +
-                ""
-              }
-            />
-            <section className="products">... products go here ...</section>
-          </div>
-        </Content>
+        <Header />
+        <Contents products={products} fetching={fetching} />
         <Footer>
-          Creatella ©{today.getFullYear()} Created by Yusuf Abdulkarim
+          Creatella ©{new Date().getFullYear()} Created by Yusuf Abdulkarim
         </Footer>
       </Layout>
     </>
