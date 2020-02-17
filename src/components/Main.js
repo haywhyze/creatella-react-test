@@ -47,7 +47,6 @@ export default function Main() {
     fetchData(
       res => {
         setInitialFetching(false);
-        console.log("here");
         setProducts(res.data.slice(0, 40));
         setCache(res.data.slice(40));
       },
