@@ -1,12 +1,12 @@
 import React from "react";
 import Product from "./Product";
 import Ad from "./Ad";
-import { Divider } from "antd";
+import { Divider, Spin, Icon } from "antd";
 
-export default function Products({ products }) {
+export default function Products({ products, fetching }) {
   return (
     <div className="products">
-      {products.length
+      {!fetching
         ? products.map((p, i) => {
             if ((i % 20 === 0) & (i !== 0)) {
               return (
@@ -20,7 +20,7 @@ export default function Products({ products }) {
             }
             return <Product key={p.id} product={p} />;
           })
-        : null}
+      : <Spin tip="Loading..." indicator={<Icon type="loading" spin />} />}
     </div>
   );
 }

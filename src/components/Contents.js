@@ -3,10 +3,11 @@ import { PageHeader, Spin, Icon, Alert } from "antd";
 import { Layout } from "antd";
 import Products from "./Products";
 import Ad from "./Ad";
+import SortButtons from "./SortButtons";
 
 const { Content } = Layout;
 
-export default function Contents({ products, fetching }) {
+export default function Contents({ products, fetching, initialFetching, setSort }) {
   return (
     <Content>
       <PageHeader
@@ -17,7 +18,8 @@ export default function Contents({ products, fetching }) {
       />
       <div>
         <Ad top={true} />
-        <Products products={products} />
+        <SortButtons setSort={setSort} />
+        <Products products={products} fetching={initialFetching} />
         {products.length < 500 && fetching && (
           <Spin tip="Loading..." indicator={<Icon type="loading" spin />} />
         )}
