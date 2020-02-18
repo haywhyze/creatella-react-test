@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from "react";
 import { PageHeader, Spin, Icon, Alert } from "antd";
 import { Layout } from "antd";
@@ -7,7 +8,13 @@ import SortButtons from "./SortButtons";
 
 const { Content } = Layout;
 
-export default function Contents({ products, fetching, initialFetching, setSort }) {
+export default function Contents({
+  topAd,
+  products,
+  fetching,
+  initialFetching,
+  setSort
+}) {
   return (
     <Content>
       <PageHeader
@@ -17,13 +24,17 @@ export default function Contents({ products, fetching, initialFetching, setSort 
           in an exciting range of sizes and prices."
       />
       <div>
-        <Ad top={true} />
+        <Ad top={true} src={topAd} />
         <SortButtons setSort={setSort} />
-        <Products products={products} fetching={initialFetching} />
-        {products.length < 500 && fetching && (
+        <Products
+          products={products}
+          fetching={initialFetching}
+          topAd={topAd}
+        />
+        {fetching && (
           <Spin tip="Loading..." indicator={<Icon type="loading" spin />} />
         )}
-        {products.length >= 500 && (
+        {products.length >= 525 && (
           <Alert message="~ end of catalogue ~" type="info" />
         )}
       </div>

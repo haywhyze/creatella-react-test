@@ -3,6 +3,7 @@ import { Layout } from "antd";
 import Header from "./Header";
 import Contents from "./Contents";
 import { fetchData } from "../api";
+import { insertAd } from "../helpers";
 
 const { Footer } = Layout;
 
@@ -13,9 +14,13 @@ export default function Main() {
   const [initialFetching, setInitialFetching] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [sort, setSort] = useState("");
+  const [lastSeen, setLastSeen] = useState("");
+  const [topAd, setTopAd] = useState("");
 
   const loadMore = () => {
+    if (products.length >= 525) return;
     setFetching(true);
+    insertAd(cache, lastSeen, setLastSeen);
     setProducts([...products, ...cache]);
     setPage(page + 1);
     fetchData(
@@ -44,10 +49,14 @@ export default function Main() {
 
   useEffect(() => {
     setInitialFetching(true);
+    setTopAd(Math.floor(Math.random() * 1000));
+    setLastSeen(topAd);
     fetchData(
       res => {
         setInitialFetching(false);
-        setProducts(res.data.slice(0, 40));
+        let products = res.data.slice(0, 40);
+        insertAd(products, lastSeen, setLastSeen);
+        setProducts(products);
         setCache(res.data.slice(40));
       },
       error => {
@@ -77,6 +86,7 @@ export default function Main() {
           fetching={fetching}
           initialFetching={initialFetching}
           setSort={setSort}
+          topAd={topAd}
         />
         <Footer>
           Creatella ©{new Date().getFullYear()} Created by Yusuf Abdulkarim

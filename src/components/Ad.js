@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import { Typography, Spin, Icon } from "antd";
+import { baseUrl } from "../api";
 
 const { Text } = Typography;
 
-export default function Ad({ top }) {
+export default function Ad({ top, src }) {
   const image = useRef(null);
   const imageSpinner = useRef(null);
 
@@ -17,11 +18,7 @@ export default function Ad({ top }) {
       <img
         ref={image}
         className="ad"
-        src={
-          "http://localhost:3000/ads/?r=" +
-          Math.floor(Math.random() * 1000) +
-          ""
-        }
+        src={`${baseUrl}ads/?r=${src}`}
         onLoad={removeImageSpinner}
       />
       <div ref={imageSpinner}>
