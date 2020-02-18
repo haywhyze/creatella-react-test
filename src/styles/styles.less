@@ -24,6 +24,10 @@
         background: #fff;
         padding: 24px;
         flex: auto;
+
+        @media (max-width: 768px) {
+          padding: 8px;
+        }
       }
     }
 
@@ -62,6 +66,10 @@
         margin-bottom: 2rem;
         align-items: center;
 
+        @media (max-width: 768px) {
+          width: 44%;
+        }
+
         .face {
           flex: 1 1 auto;
         }
@@ -70,6 +78,10 @@
 
     .ant-alert {
       text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      padding: 0;
     }
   }
 
