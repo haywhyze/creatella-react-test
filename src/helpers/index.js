@@ -1,10 +1,31 @@
+import uuidv4 from 'uuid/v4'
+
 export const formatPrice = price => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     currencyDisplay: "symbol"
-  }).format(price/100);
+  }).format(price / 100);
 };
+
+export const getNewAd = (last, callback) => {
+  let newAdNumber;
+  do {
+    newAdNumber = Math.floor(Math.random() * 1000);
+  } while (newAdNumber === last);
+  callback(newAdNumber);
+  return newAdNumber;
+};
+
+export const insertAd = (listOfProducts, last, callback) => {
+  for (let i = 0; i <= listOfProducts.length; i += 20) {
+    if (i !== 0) {
+      let src = getNewAd(last, callback)
+      listOfProducts.splice(i, 0, { id: uuidv4(), src });
+      i += 1;
+    }
+  }
+}
 
 export const formatDate = time => {
   const timeDifference = Date.now() - Date.parse(time);
