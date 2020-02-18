@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Statistic, Tag } from 'antd';
 import { formatPrice, formatDate } from '../helpers';
 
@@ -13,3 +14,13 @@ export default function Product({ product }) {
     </div>
   );
 }
+
+Product.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    size: PropTypes.number,
+    price: PropTypes.number,
+    date: PropTypes.string,
+    face: PropTypes.string,
+  }).isRequired,
+};

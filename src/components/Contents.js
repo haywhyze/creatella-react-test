@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import {
-  PageHeader, Spin, Icon, Alert,
-  Layout,
+  PageHeader, Spin, Icon, Alert, Layout,
 } from 'antd';
+import PropTypes from 'prop-types';
 
 import Products from './Products';
 import Ad from './Ad';
@@ -44,3 +44,23 @@ export default function Contents({
     </Content>
   );
 }
+
+Contents.propTypes = {
+  topAd: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  products: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      src: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    }),
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      size: PropTypes.number,
+      price: PropTypes.number,
+      date: PropTypes.string,
+      length: PropTypes.number,
+    }),
+  ])).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  initialFetching: PropTypes.bool.isRequired,
+  setSort: PropTypes.func.isRequired,
+};

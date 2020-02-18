@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Radio, Typography } from 'antd';
 
 export default function SortButtons({ setSort }) {
@@ -15,3 +16,7 @@ export default function SortButtons({ setSort }) {
     </div>
   );
 }
+
+SortButtons.propTypes = {
+  setSort: PropTypes.func.isRequired,
+};
