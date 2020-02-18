@@ -15,7 +15,7 @@ export default function Main() {
   const [lastSeen, setLastSeen] = useState('');
   const [topAd, setTopAd] = useState('');
 
-  const [fetching, setCache] = useInfiniteScroll(
+  const [fetching, setCache, endOfCatalogue, cache] = useInfiniteScroll(
     products,
     setProducts,
     sort,
@@ -54,8 +54,10 @@ export default function Main() {
           products={products}
           fetching={fetching}
           initialFetching={initialFetching}
+          endOfCatalogue={endOfCatalogue}
           setSort={setSort}
           topAd={topAd}
+          cache={cache}
         />
         <Footer>
           Creatella ©

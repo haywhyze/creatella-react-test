@@ -17,6 +17,8 @@ export default function Contents({
   fetching,
   initialFetching,
   setSort,
+  endOfCatalogue,
+  cache,
 }) {
   return (
     <Content>
@@ -37,7 +39,7 @@ export default function Contents({
         {fetching && (
           <Spin tip="Loading..." indicator={<Icon type="loading" spin />} />
         )}
-        {products.length >= 525 && (
+        {endOfCatalogue && !cache.length && (
           <Alert message="~ end of catalogue ~" type="info" />
         )}
       </div>
@@ -61,6 +63,17 @@ Contents.propTypes = {
     }),
   ])).isRequired,
   fetching: PropTypes.bool.isRequired,
+  endOfCatalogue: PropTypes.bool.isRequired,
   initialFetching: PropTypes.bool.isRequired,
   setSort: PropTypes.func.isRequired,
+  cache: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      size: PropTypes.number,
+      price: PropTypes.number,
+      date: PropTypes.string,
+      length: PropTypes.number,
+    }),
+  ])).isRequired,
 };

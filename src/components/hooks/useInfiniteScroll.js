@@ -12,6 +12,7 @@ const useInfiniteScroll = (
   const [cache, setCache] = useState([]);
   const [fetching, setFetching] = useState(false);
   const [page, setPage] = useState(1);
+  const [endOfCatalogue, setEndOfCatalogue] = useState(false);
 
   const loadMore = () => {
     if (products.length >= 525) return;
@@ -23,6 +24,7 @@ const useInfiniteScroll = (
       (res) => {
         setFetching(false);
         setCache(res.data);
+        if (res.data.length < 40) setEndOfCatalogue(true);
       },
       (error) => {
         setFetching(false);
@@ -51,7 +53,7 @@ const useInfiniteScroll = (
     };
   }, [products, cache, page, fetching, sort]);
 
-  return [fetching, setCache];
+  return [fetching, setCache, endOfCatalogue, cache];
 };
 
 export default useInfiniteScroll;
