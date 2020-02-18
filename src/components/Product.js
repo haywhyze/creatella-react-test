@@ -1,10 +1,10 @@
-import React from "react";
-import { Statistic, Tag } from "antd";
-import { formatPrice, formatDate } from "../helpers";
+import React from 'react';
+import { Statistic, Tag } from 'antd';
+import { formatPrice, formatDate } from '../helpers';
 
 export default function Product({ product }) {
   return (
-    <div className={"face-card"}>
+    <div className="face-card">
       <span className="face" style={{ fontSize: product.size }}>
         {product.face}
       </span>

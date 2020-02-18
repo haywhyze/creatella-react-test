@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { insertAd } from "../../helpers";
-import { fetchData } from "../../api";
+import { useEffect, useState } from 'react';
+import { insertAd } from '../../helpers';
+import { fetchData } from '../../api';
 
-export const useInfiniteScroll = (
+const useInfiniteScroll = (
   products,
   setProducts,
   sort,
   lastSeen,
-  setLastSeen
+  setLastSeen,
 ) => {
   const [cache, setCache] = useState([]);
   const [fetching, setFetching] = useState(false);
@@ -20,35 +20,38 @@ export const useInfiniteScroll = (
     setProducts([...products, ...cache]);
     setPage(page + 1);
     fetchData(
-      res => {
-        setFetching(false), setCache(res.data);
+      (res) => {
+        setFetching(false);
+        setCache(res.data);
       },
-      error => {
+      (error) => {
         setFetching(false);
         console.log(error);
       },
       page + 2,
       40,
-      sort
+      sort,
     );
   };
 
   const handleScroll = () => {
     if (fetching) return;
     if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.querySelector("#root").offsetHeight
+      window.innerHeight + document.documentElement.scrollTop
+      === document.querySelector('#root').offsetHeight
     ) {
       loadMore();
     }
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [products, cache, page, fetching, sort]);
 
   return [fetching, setCache];
 };
+
+export default useInfiniteScroll;

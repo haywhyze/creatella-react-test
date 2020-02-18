@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Layout } from "antd";
-import Header from "./Header";
-import Contents from "./Contents";
-import { fetchData } from "../api";
-import { insertAd } from "../helpers";
-import { useInfiniteScroll } from "./hooks/useInfiniteScroll";
+import React, { useEffect, useState } from 'react';
+import { Layout } from 'antd';
+import Header from './Header';
+import Contents from './Contents';
+import { fetchData } from '../api';
+import { insertAd } from '../helpers';
+import useInfiniteScroll from './hooks/useInfiniteScroll';
 
 const { Footer } = Layout;
 
 export default function Main() {
   const [products, setProducts] = useState([]);
   const [initialFetching, setInitialFetching] = useState(false);
-  const [sort, setSort] = useState("");
-  const [lastSeen, setLastSeen] = useState("");
-  const [topAd, setTopAd] = useState("");
+  const [sort, setSort] = useState('');
+  const [lastSeen, setLastSeen] = useState('');
+  const [topAd, setTopAd] = useState('');
 
   const [fetching, setCache] = useInfiniteScroll(
     products,
     setProducts,
     sort,
     lastSeen,
-    setLastSeen
+    setLastSeen,
   );
 
   useEffect(() => {
@@ -28,20 +28,20 @@ export default function Main() {
     setTopAd(Math.floor(Math.random() * 1000));
     setLastSeen(topAd);
     fetchData(
-      res => {
+      (res) => {
         setInitialFetching(false);
-        let products = res.data.slice(0, 40);
-        insertAd(products, lastSeen, setLastSeen);
-        setProducts(products);
+        const data = res.data.slice(0, 40);
+        insertAd(data, lastSeen, setLastSeen);
+        setProducts(data);
         setCache(res.data.slice(40));
       },
-      error => {
+      (error) => {
         setInitialFetching(false);
         console.log(error);
       },
       1,
       80,
-      sort
+      sort,
     );
     return () => {};
   }, [sort]);
@@ -58,7 +58,10 @@ export default function Main() {
           topAd={topAd}
         />
         <Footer>
-          Creatella ©{new Date().getFullYear()} Created by Yusuf Abdulkarim
+          Creatella ©
+          {new Date().getFullYear()}
+          {' '}
+          Created by Yusuf Abdulkarim
         </Footer>
       </Layout>
     </>

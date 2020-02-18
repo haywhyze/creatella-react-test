@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Product from "./Product";
-import Ad from "./Ad";
-import { Divider, Spin, Icon } from "antd";
+import React from 'react';
+import { Divider, Spin, Icon } from 'antd';
+import Product from './Product';
+import Ad from './Ad';
 
 export default function Products({ products, fetching, topAd }) {
-
   return (
     <div className="products">
       {!fetching ? (
-        products.map(p => {
+        products.map((p) => {
           if (p.src) {
             return (
               <React.Fragment key={p.id}>

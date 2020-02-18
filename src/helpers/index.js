@@ -1,12 +1,10 @@
-import uuidv4 from 'uuid/v4'
+import uuidv4 from 'uuid/v4';
 
-export const formatPrice = price => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    currencyDisplay: "symbol"
-  }).format(price / 100);
-};
+export const formatPrice = (price) => new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  currencyDisplay: 'symbol',
+}).format(price / 100);
 
 export const getNewAd = (last, callback) => {
   let newAdNumber;
@@ -20,31 +18,31 @@ export const getNewAd = (last, callback) => {
 export const insertAd = (listOfProducts, last, callback) => {
   for (let i = 0; i <= listOfProducts.length; i += 20) {
     if (i !== 0) {
-      let src = getNewAd(last, callback)
+      const src = getNewAd(last, callback);
       listOfProducts.splice(i, 0, { id: uuidv4(), src });
       i += 1;
     }
   }
-}
+};
 
-export const formatDate = time => {
+export const formatDate = (time) => {
   const timeDifference = Date.now() - Date.parse(time);
   let formattedTime;
 
   if (timeDifference < 60000) {
-    formattedTime = Math.floor(timeDifference / 1000) + " seconds ago";
+    formattedTime = `${Math.floor(timeDifference / 1000)} seconds ago`;
   } else if (timeDifference < 3600000) {
-    formattedTime = Math.floor(timeDifference / 60000) + " minutes ago";
+    formattedTime = `${Math.floor(timeDifference / 60000)} minutes ago`;
   } else if (timeDifference < 86400000) {
-    formattedTime = Math.floor(timeDifference / 3600000) + " hours ago";
+    formattedTime = `${Math.floor(timeDifference / 3600000)} hours ago`;
   } else if (timeDifference < 604800000) {
-    formattedTime = Math.floor(timeDifference / 86400000) + " days ago";
+    formattedTime = `${Math.floor(timeDifference / 86400000)} days ago`;
   } else {
     formattedTime = new Date(time);
-    formattedTime = formattedTime.toLocaleDateString("us-EN", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
+    formattedTime = formattedTime.toLocaleDateString('us-EN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   }
 

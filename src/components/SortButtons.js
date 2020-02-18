@@ -1,5 +1,5 @@
-import React from "react";
-import { Radio, Typography } from "antd";
+import React from 'react';
+import { Radio, Typography } from 'antd';
 
 export default function SortButtons({ setSort }) {
   return (

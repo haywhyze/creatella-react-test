@@ -1,7 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./styles/styles.less";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './styles/styles.less';
 
-import Main from "./components/Main";
+import Main from './components/Main';
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById('root'));
