@@ -1,10 +1,10 @@
 import uuidv4 from 'uuid/v4';
 
 export const formatPrice = (price) => new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  currencyDisplay: 'symbol',
-}).format(price / 100);
+    style: 'currency',
+    currency: 'USD',
+    currencyDisplay: 'symbol',
+  }).format(price / 100);
 
 export const getNewAd = (last, callback) => {
   /* generate a new number, if it is the same with last seen ad,
@@ -35,16 +35,23 @@ export const formatDate = (time) => {
 
   if (timeDifference < 60000) {
     // if time difference is less than 1 minute, format in seconds
-    formattedTime = `${Math.floor(timeDifference / 1000)} seconds ago`;
+    if (Math.floor(timeDifference / 1000) === 1) formattedTime = '1 second ago';
+    else formattedTime = `${Math.floor(timeDifference / 1000)} seconds ago`;
   } else if (timeDifference < 3600000) {
     // if time difference is less than 1 hour, format in minutes
-    formattedTime = `${Math.floor(timeDifference / 60000)} minutes ago`;
+    if (Math.floor(timeDifference / 60000) === 1) {
+      formattedTime = '1 minute ago';
+    } else formattedTime = `${Math.floor(timeDifference / 60000)} minutes ago`;
   } else if (timeDifference < 86400000) {
     // if time difference is less than 1 day, format in hours
-    formattedTime = `${Math.floor(timeDifference / 3600000)} hours ago`;
+    if (Math.floor(timeDifference / 3600000) === 1) {
+      formattedTime = '1 hour ago';
+    } else formattedTime = `${Math.floor(timeDifference / 3600000)} hours ago`;
   } else if (timeDifference < 604800000) {
     // if time difference is less than 1 week, format in days
-    formattedTime = `${Math.floor(timeDifference / 86400000)} days ago`;
+    if (Math.floor(timeDifference / 86400000) === 1) {
+      formattedTime = '1 day ago';
+    } else formattedTime = `${Math.floor(timeDifference / 86400000)} days ago`;
   } else {
     // else supply full date
     formattedTime = new Date(time);
