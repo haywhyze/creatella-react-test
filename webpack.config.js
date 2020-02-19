@@ -1,39 +1,36 @@
-const path = require("path");
+const path = require('path');
+// const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-  entry: "./src/app.js",
+const modeConfiguration = (env) => require(`./webpack.${env}`)(env);
+
+module.exports = ({ mode } = { mode: 'production' }) => webpackMerge({
+  mode,
+  entry: './src/app.js',
   output: {
-    path: path.join(__dirname, "public"),
-    filename: "bundle.js"
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js',
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            ['import', { libraryName: 'antd', style: true }],
+          ],
+        },
       },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
-      {
-        test: /\.less$/,
-        use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" },
-          {
-            loader: "less-loader",
-            options: {
-              javascriptEnabled: true
-            }
-          }
-        ]
-      }
-    ]
+    ],
   },
-  devtool: "cheap-module-eval-source-map",
   devServer: {
-    contentBase: path.join(__dirname, "public")
-  }
-};
+    contentBase: path.join(__dirname, 'public'),
+  },
+  plugins: [
+    new AntdDayjsWebpackPlugin(),
+  ],
+}, modeConfiguration(mode));
