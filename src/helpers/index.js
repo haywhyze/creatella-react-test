@@ -7,15 +7,19 @@ export const formatPrice = (price) => new Intl.NumberFormat('en-US', {
 }).format(price / 100);
 
 export const getNewAd = (last, callback) => {
+  /* generate a new number, if it is the same with last seen ad,
+  generate another until it is not the same as last seen ad */
   let newAdNumber;
   do {
     newAdNumber = Math.floor(Math.random() * 1000);
   } while (newAdNumber === last);
+  // use provided callback function to set newAd as last seen ad
   callback(newAdNumber);
   return newAdNumber;
 };
 
 export const insertAd = (listOfProducts, last, callback) => {
+  // for every 20 products insert an ad
   for (let i = 0; i <= listOfProducts.length; i += 20) {
     if (i !== 0) {
       const src = getNewAd(last, callback);
@@ -30,14 +34,19 @@ export const formatDate = (time) => {
   let formattedTime;
 
   if (timeDifference < 60000) {
+    // if time difference is less than 1 minute, format in seconds
     formattedTime = `${Math.floor(timeDifference / 1000)} seconds ago`;
   } else if (timeDifference < 3600000) {
+    // if time difference is less than 1 hour, format in minutes
     formattedTime = `${Math.floor(timeDifference / 60000)} minutes ago`;
   } else if (timeDifference < 86400000) {
+    // if time difference is less than 1 day, format in hours
     formattedTime = `${Math.floor(timeDifference / 3600000)} hours ago`;
   } else if (timeDifference < 604800000) {
+    // if time difference is less than 1 week, format in days
     formattedTime = `${Math.floor(timeDifference / 86400000)} days ago`;
   } else {
+    // else supply full date
     formattedTime = new Date(time);
     formattedTime = formattedTime.toLocaleDateString('us-EN', {
       year: 'numeric',

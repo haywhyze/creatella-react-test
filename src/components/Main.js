@@ -25,22 +25,26 @@ export default function Main() {
 
   useEffect(() => {
     setInitialFetching(true);
+    // generate ad to be displayed at the top of the page
     setTopAd(Math.floor(Math.random() * 1000));
     setLastSeen(topAd);
+
     fetchData(
       (res) => {
         setInitialFetching(false);
+        // get 40 items and insert an ad after every 20 items
         const data = res.data.slice(0, 40);
         insertAd(data, lastSeen, setLastSeen);
         setProducts(data);
+        // set other 40 items to cache for next batch
         setCache(res.data.slice(40));
       },
       (error) => {
         setInitialFetching(false);
         console.log(error);
       },
-      1,
-      80,
+      1, // page
+      80, // limit
       sort,
     );
     return () => {};
@@ -61,9 +65,7 @@ export default function Main() {
         />
         <Footer>
           Creatella ©
-          {new Date().getFullYear()}
-          {' '}
-          Created by Yusuf Abdulkarim
+          {`${new Date().getFullYear()} Created by Yusuf Abdulkarim`}
         </Footer>
       </Layout>
     </>

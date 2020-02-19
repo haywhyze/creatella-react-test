@@ -7,7 +7,11 @@ export default function SortButtons({ setSort }) {
     <div className="sort-container">
       <Typography.Text>Sort Items by: </Typography.Text>
       <br />
-      <Radio.Group onChange={(e) => setSort(e.target.value)} defaultValue="a" buttonStyle="solid">
+      <Radio.Group
+        onChange={(e) => setSort(e.target.value)}
+        defaultValue="a"
+        buttonStyle="solid"
+      >
         <Radio.Button value="id">ID</Radio.Button>
         <Radio.Button value="price">Price</Radio.Button>
         <Radio.Button value="size">Size</Radio.Button>

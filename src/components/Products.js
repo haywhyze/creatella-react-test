@@ -8,18 +8,19 @@ export default function Products({ products, fetching }) {
   return (
     <div className="products">
       {!fetching ? (
-        products.map((p) => {
-          if (p.src) {
+        products.map((item) => {
+          // if item has src attribute, return an ad
+          if (item.src) {
             return (
-              <React.Fragment key={p.id}>
+              <React.Fragment key={item.id}>
                 <Divider />
-                <Ad top={false} src={p.src} />
-                {p.src}
+                <Ad top={false} src={item.src} />
+                {item.src}
                 <Divider />
               </React.Fragment>
             );
           }
-          return <Product key={p.id} product={p} />;
+          return <Product key={item.id} product={item} />;
         })
       ) : (
         <Spin tip="Loading..." indicator={<Icon type="loading" spin />} />

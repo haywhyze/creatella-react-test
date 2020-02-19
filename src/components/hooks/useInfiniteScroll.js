@@ -15,10 +15,16 @@ const useInfiniteScroll = (
   const [endOfCatalogue, setEndOfCatalogue] = useState(false);
 
   const loadMore = () => {
-    if (products.length >= 525) return;
+    // if last fetch returns less than 40 items and cache is empty abort mission
+    if (endOfCatalogue && !cache.length) return;
+
     setFetching(true);
+
+    // insert ad after every 20 items in cache
     insertAd(cache, lastSeen, setLastSeen);
+    // add cache items to products to be displayed
     setProducts([...products, ...cache]);
+    // increment page and fetch next batch of data into cache
     setPage(page + 1);
     fetchData(
       (res) => {
@@ -31,12 +37,13 @@ const useInfiniteScroll = (
         console.log(error);
       },
       page + 2,
-      40,
+      40, // limit
       sort,
     );
   };
 
   const handleScroll = () => {
+    // if currently fetching, abort mission
     if (fetching) return;
     if (
       window.innerHeight + document.documentElement.scrollTop
